@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.AdmDBController">
+   <children>
+      <TabPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="581.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Alerts">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane layoutX="14.0" prefHeight="314.0" prefWidth="571.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="288.0" prefWidth="554.0">
+                                 <children>
+                                    <ListView fx:id="alert_list" fixedCellSize="100.0" layoutX="-2.0" layoutY="-2.0" prefHeight="324.0" prefWidth="558.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Products">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="512.0" layoutY="40.0" mnemonicParsing="false" onAction="#search" text="0---" />
+                        <Button layoutX="17.0" layoutY="6.0" mnemonicParsing="false" onAction="#add_prod_btn" text="Add Product" />
+                        <Button layoutX="114.0" layoutY="6.0" mnemonicParsing="false" onAction="#reg_pro_btn" text="Register Product" />
+                        <Button layoutX="234.0" layoutY="6.0" mnemonicParsing="false" onAction="#re_prod_btn" text="Remove Product" />
+                        <ScrollPane layoutX="14.0" layoutY="97.0" prefHeight="200.0" prefWidth="561.0">
+                          <content>
+                                    <TableView fx:id="productTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="70.0" prefHeight="70.0" prefWidth="558.0">
+                                        <columns>
+                                            <TableColumn fx:id="colId" text="ID" prefWidth="50.0" />
+                                            <TableColumn fx:id="colName" text="Item Name" prefWidth="150.0" />
+                                            <TableColumn fx:id="colBatch" text="Batch Num" prefWidth="90.0" />
+                                            <TableColumn fx:id="colPrice" text="Price" prefWidth="70.0" />
+                                            <TableColumn fx:id="colExpiry" text="Expiry Date" prefWidth="110.0" />
+                                            <TableColumn fx:id="colStock" text="No. of Stock" prefWidth="80.0" />
+                                        </columns>
+                                    </TableView>
+                          </content>
+                        </ScrollPane>
+                        <Button layoutX="351.0" layoutY="6.0" mnemonicParsing="false" onAction="#gen_inv_rep_btn" prefHeight="30.0" prefWidth="214.0" text="Generate Inventory Report" />
+                         <TextField layoutX="14.0" layoutY="43.0" onAction="#search" prefHeight="26.0" prefWidth="489.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Staff">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="517.0" layoutY="14.0" mnemonicParsing="false" onAction="#create_staff_btn" text="Create" />
+                        <ScrollPane layoutY="53.0" prefHeight="257.0" prefWidth="582.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="561.0">
+                                 <children>
+                                    <GridPane fx:id="staff_list" prefHeight="169.0" prefWidth="579.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="38.4000244140625" />
+                                          <ColumnConstraints hgrow="ALWAYS" maxWidth="390.59998779296876" minWidth="10.0" prefWidth="318.3999755859375" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.4000244140625" minWidth="10.0" prefWidth="74.80000000000001" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.19998779296873" minWidth="10.0" prefWidth="104.39999999999998" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="65.60001220703126" minHeight="10.0" prefHeight="57.79998779296875" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="85.00001220703125" minHeight="0.0" prefHeight="51.40001220703125" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="130.8" minHeight="10.0" prefHeight="66.60001220703124" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#rem_staff_btn" text="Remove" GridPane.columnIndex="2" />
+                                          <Button layoutX="285.0" layoutY="27.0" mnemonicParsing="false" onAction="#adm_perm_btn" text="Admin Permit" GridPane.columnIndex="3" />
+                                          <Label prefHeight="18.0" prefWidth="150.0" text="Employee 1" GridPane.columnIndex="1" />
+                                          <Label layoutX="58.0" layoutY="33.0" prefHeight="18.0" prefWidth="150.0" text="ID 1" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button layoutX="604.0" layoutY="354.0" mnemonicParsing="false" onAction="#logout_btn" text="Logout" />
+      <Label layoutX="591.0" layoutY="36.0" prefHeight="18.0" prefWidth="62.0" text="Welcome">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="adm_name" layoutX="591.0" layoutY="56.0" prefHeight="73.0" prefWidth="62.0" text="Name" wrapText="true" />
+   </children>
+</Pane>
