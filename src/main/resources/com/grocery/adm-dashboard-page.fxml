@@ -6,19 +6,16 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.AdmDBController">
    <children>
-      <TabPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="581.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="mainTabPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="581.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Alerts">
                <content>
@@ -37,7 +34,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Products">
+            <Tab fx:id="prod_tab" text="Products">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -49,58 +46,41 @@
                           <content>
                                     <TableView fx:id="productTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="70.0" prefHeight="70.0" prefWidth="558.0">
                                         <columns>
-                                            <TableColumn fx:id="colId" text="ID" prefWidth="50.0" />
-                                            <TableColumn fx:id="colName" text="Item Name" prefWidth="150.0" />
-                                            <TableColumn fx:id="colBatch" text="Batch Num" prefWidth="90.0" />
-                                            <TableColumn fx:id="colPrice" text="Price" prefWidth="70.0" />
-                                            <TableColumn fx:id="colExpiry" text="Expiry Date" prefWidth="110.0" />
-                                            <TableColumn fx:id="colStock" text="No. of Stock" prefWidth="80.0" />
+                                            <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+                                            <TableColumn fx:id="colName" prefWidth="150.0" text="Item Name" />
+                                            <TableColumn fx:id="colBatch" prefWidth="90.0" text="Batch Num" />
+                                            <TableColumn fx:id="colPrice" prefWidth="70.0" text="Price" />
+                                            <TableColumn fx:id="colExpiry" prefWidth="110.0" text="Expiry Date" />
+                                            <TableColumn fx:id="colStock" prefWidth="80.0" text="No. of Stock" />
                                         </columns>
                                     </TableView>
                           </content>
                         </ScrollPane>
                         <Button layoutX="351.0" layoutY="6.0" mnemonicParsing="false" onAction="#gen_inv_rep_btn" prefHeight="30.0" prefWidth="214.0" text="Generate Inventory Report" />
-                         <TextField layoutX="14.0" layoutY="43.0" onAction="#search" prefHeight="26.0" prefWidth="489.0" />
+                         <TextField fx:id="search_field" layoutX="14.0" layoutY="43.0" onAction="#search" prefHeight="26.0" prefWidth="489.0" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Staff">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button layoutX="517.0" layoutY="14.0" mnemonicParsing="false" onAction="#create_staff_btn" text="Create" />
-                        <ScrollPane layoutY="53.0" prefHeight="257.0" prefWidth="582.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="255.0" prefWidth="561.0">
-                                 <children>
-                                    <GridPane fx:id="staff_list" prefHeight="169.0" prefWidth="579.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="38.4000244140625" />
-                                          <ColumnConstraints hgrow="ALWAYS" maxWidth="390.59998779296876" minWidth="10.0" prefWidth="318.3999755859375" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.4000244140625" minWidth="10.0" prefWidth="74.80000000000001" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.19998779296873" minWidth="10.0" prefWidth="104.39999999999998" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="65.60001220703126" minHeight="10.0" prefHeight="57.79998779296875" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="85.00001220703125" minHeight="0.0" prefHeight="51.40001220703125" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="130.8" minHeight="10.0" prefHeight="66.60001220703124" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#rem_staff_btn" text="Remove" GridPane.columnIndex="2" />
-                                          <Button layoutX="285.0" layoutY="27.0" mnemonicParsing="false" onAction="#adm_perm_btn" text="Admin Permit" GridPane.columnIndex="3" />
-                                          <Label prefHeight="18.0" prefWidth="150.0" text="Employee 1" GridPane.columnIndex="1" />
-                                          <Label layoutX="58.0" layoutY="33.0" prefHeight="18.0" prefWidth="150.0" text="ID 1" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
+             <Tab text="Staff">
+                 <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                         <children>
+                             <Button fx:id="cr8_stf_btn_id" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#create_staff_btn" text="Create Staff" />
+                             <Button layoutX="110.0" layoutY="14.0" mnemonicParsing="false" onAction="#adm_perm_btn" style="-fx-base: #3498db; -fx-text-fill: white;" text="Give Admin Permit" />
+                             <Button layoutX="240.0" layoutY="14.0" mnemonicParsing="false" onAction="#rem_staff_btn" style="-fx-base: #e74c3c; -fx-text-fill: white;" text="Remove Staff" />
+
+                             <TableView fx:id="staffTable" layoutX="14.0" layoutY="53.0" prefHeight="257.0" prefWidth="554.0">
+                                 <columns>
+                                     <TableColumn fx:id="colStaffId" prefWidth="80.0" text="Staff ID" />
+                                     <TableColumn fx:id="colStaffName" prefWidth="300.0" text="Employee Name" />
+                                     <TableColumn fx:id="colStaffRole" prefWidth="170.0" text="Role Status" />
+                                 </columns>
+                             </TableView>
+                         </children>
+                     </AnchorPane>
+                 </content>
+             </Tab>
          </tabs>
       </TabPane>
       <Button layoutX="604.0" layoutY="354.0" mnemonicParsing="false" onAction="#logout_btn" text="Logout" />
