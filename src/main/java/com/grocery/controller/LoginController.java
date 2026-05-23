@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
 
-import com.grocery.util.DataBConnection;
-import com.grocery.util.User;
+import com.grocery.data.DataBConnection;
+import com.grocery.data.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
+import static com.grocery.App.loadFXML;
 
 public class LoginController {
     @FXML
@@ -22,7 +23,6 @@ public class LoginController {
 
     @FXML
     private TextField user_id;
-    
 
     @FXML
     private void initialize() {
@@ -37,9 +37,9 @@ public class LoginController {
 
         String role = null;
         String name = null;
-
-        DataBConnection connect = DataBConnection.getInstance();
-        try(Connection dm = connect.getConnection()){
+        User user = User.getInstance();
+        user.setUserRole("0");
+        try(Connection dm = user.getConnection()){
 
             String query = "SELECT * FROM users WHERE user_id = '"+id+"' AND user_password = '"+pass +"'";
             Statement stmt = dm.createStatement();
@@ -49,31 +49,19 @@ public class LoginController {
                 id = rs.getInt("user_id");
                 name = rs.getString("user_name");
                 role = rs.getString("user_role");
-                System.out.println(id +name + role);
+                System.out.println(id + name + role);
             } else {
                 System.out.println("No user found with that ID.");
             }
 
-            User user = User.getInstance();
             user.setUserRole(role);
             user.setUserId(id);
             user.setUsername(name);
 
             if (Objects.equals(role, "manager")) {
-
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/grocery/adm-dashboard-page.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Node node = (Node) actionEvent.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
+                loadFXML("adm-dashboard-page");
             } else if (Objects.equals(role, "staff")) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/grocery/staff-dsdboard.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Node node = (Node) actionEvent.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
+                loadFXML("staff-dsdboard");
             }
         } catch (Exception e) {
             System.out.println(e);

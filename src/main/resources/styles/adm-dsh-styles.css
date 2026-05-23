@@ -1,0 +1,24 @@
+
+.table-row-cell.low-stock-row {
+    -fx-background-color: #ffcccc; /* Light red */
+}
+
+.table-row-cell.low-stock-row:selected {
+    -fx-background-color: #ff9999; /* Darker red for selection */
+}
+
+.table-row-cell.edited-stock-row {
+    -fx-background-color: #90D5FF;
+}
+
+.table-row-cell.edited-stock-row:selected {
+    -fx-background-color: #90FFF1;
+}
+
+.del_btn{
+    -fx-base: #e74c3c; -fx-text-fill: white;
+}
+
+#adm_perm_btn{
+    -fx-base: #3498db; -fx-text-fill: white;
+}

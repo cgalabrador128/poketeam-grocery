@@ -1,7 +1,8 @@
 package com.grocery.controller;
 
-import com.grocery.util.DataBConnection;
+import com.grocery.data.DataBConnection;
 
+import com.grocery.data.User;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,9 +15,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import static com.grocery.App.loadFXML;
 
 
 public class AddStaffController {
@@ -26,14 +30,18 @@ public class AddStaffController {
     private TextField staff_id;
     @FXML
     private TextField staff_pass;
+    @FXML
+    private ChoiceBox staff_role;
+
+    User user;
+    Connection dm;
 
     @FXML
-    public void initialize() {
-    }
+    public void initialize() throws SQLException {
+        user = User.getInstance();
+        dm = user.getConnection();
 
-    @FXML
-    public void cancel_btn(javafx.event.ActionEvent actionEvent) throws IOException {
-        closeWindow(actionEvent);
+
     }
 
     @FXML
@@ -42,13 +50,13 @@ public class AddStaffController {
         String name = staff_name.getText();
         int id = Integer.parseInt(staff_id.getText());
         String pass = staff_pass.getText();
+
         //confirmation
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to add"+name+"?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to add "+name+" ?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get()==ButtonType.OK) {
             String query = "INSERT INTO users (user_id, user_name, user_password, user_role) VALUES (?, ?, ?, ?)";
-            try (Connection dm = DataBConnection.getInstance().getConnection();
-                 PreparedStatement pstmt = dm.prepareStatement(query)) {
+            try (PreparedStatement pstmt = dm.prepareStatement(query)) {
                 pstmt.setInt(1, id);
                 pstmt.setString(2, name);
                 pstmt.setString(3, pass);
@@ -62,13 +70,5 @@ public class AddStaffController {
             }
         }
     }
-
-    private void closeWindow(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/grocery/adm-dashboard-page.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
+    private void closeWindow(ActionEvent event) throws IOException {loadFXML("adm-dashboard-page");}
 }

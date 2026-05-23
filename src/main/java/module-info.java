@@ -11,4 +11,6 @@ module com.grocery {
     opens com.grocery.controller to javafx.fxml;
     exports com.grocery.util;
     opens com.grocery.util to javafx.fxml;
+    exports com.grocery.data;
+    opens com.grocery.data to javafx.fxml;
 }

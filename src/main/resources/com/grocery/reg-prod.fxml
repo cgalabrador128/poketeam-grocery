@@ -4,15 +4,15 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
+<?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.DefineProductController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.RegisterProductController">
    <children>
       <Label fx:id="title_label" alignment="CENTER" layoutX="223.0" layoutY="26.0" prefHeight="38.0" prefWidth="139.0" text="Modify Product" textAlignment="CENTER" />
       <GridPane layoutX="2.0" layoutY="88.0" prefHeight="182.0" prefWidth="590.0">
@@ -31,22 +31,14 @@
          <children>
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="330.0" text="Products Serial Number" textAlignment="CENTER" />
             <TextField fx:id="prod_id" prefHeight="26.0" prefWidth="347.0" GridPane.columnIndex="1" />
-            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="330.0" text="Stock Amount" textAlignment="CENTER" GridPane.rowIndex="3" />
-            <Spinner fx:id="prod_amt" editable="true" prefHeight="26.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <valueFactory>
-                    <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="1" max="1000" min="1" />
-                </valueFactory>
-            </Spinner>
-            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="330.0" text="Batch No." textAlignment="CENTER" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="330.0" text="Stock Amount" textAlignment="CENTER" GridPane.rowIndex="3"/>
+             <Spinner fx:id="prod_amt" editable="true" prefHeight="26.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+             <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="330.0" text="Batch No." textAlignment="CENTER" GridPane.rowIndex="1" />
             <TextField fx:id="prod_batchno" layoutX="224.0" layoutY="12.0" prefHeight="26.0" prefWidth="347.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label alignment="CENTER" layoutX="10.0" layoutY="154.0" prefHeight="30.0" prefWidth="330.0" text="Product Name" textAlignment="CENTER" GridPane.rowIndex="2" />
             <TextField fx:id="prod_name" layoutX="224.0" layoutY="65.0" prefHeight="26.0" prefWidth="347.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER" layoutX="10.0" layoutY="101.0" prefHeight="30.0" prefWidth="330.0" text="Price" textAlignment="CENTER" GridPane.rowIndex="4" />
-            <Spinner fx:id="prod_price" editable="true" layoutX="224.0" layoutY="103.0" prefHeight="26.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                <valueFactory>
-                    <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="1.0" initialValue="1.0" max="999999.99" min="1.00" />
-                </valueFactory>
-            </Spinner>
+             <Spinner fx:id="prod_price" editable="true" layoutX="224.0" layoutY="103.0" prefHeight="26.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
             <Label alignment="CENTER" layoutX="10.0" layoutY="71.0" prefHeight="30.0" prefWidth="330.0" text="Expiry Date" textAlignment="CENTER" GridPane.rowIndex="5" />
             <DatePicker fx:id="expiry_date" prefHeight="26.0" prefWidth="378.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
