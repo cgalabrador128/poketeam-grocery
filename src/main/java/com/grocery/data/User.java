@@ -14,12 +14,14 @@ public class User {
     private Connection connection;
     private DataBConnection dbconn = DataBConnection.getInstance();
     private String search;
+    private Boolean permit;
     private User(){
         this.id = -99;
         this.name = null;
         this.role = null;
         this.connection = null;
         this.search = "";
+        this.permit = false;
     }
 
     public static synchronized User getInstance(){
@@ -33,9 +35,9 @@ public class User {
         this.id = -99;
         this.name = null;
         this.role = null;
-        connection.close();
         this.connection = null;
         this.search = "";
+        this.permit = false;
     }
 
     private void setData() throws SQLException {
@@ -69,6 +71,9 @@ public class User {
         this.role = role;
         setData();
     }
+    public Boolean getPermit() {return permit;}
+    public void setPermit(Boolean permit) {this.permit = permit;}
     public void setSearch(String search) {this.search = search;}
     public String getSearch() {return search;}
+
 }

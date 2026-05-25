@@ -37,6 +37,7 @@ public class LoginController {
 
         String role = null;
         String name = null;
+        Boolean permit = false;
         User user = User.getInstance();
         user.setUserRole("0");
         try(Connection dm = user.getConnection()){
@@ -49,6 +50,7 @@ public class LoginController {
                 id = rs.getInt("user_id");
                 name = rs.getString("user_name");
                 role = rs.getString("user_role");
+                permit = rs.getBoolean("has_admin");
                 System.out.println(id + name + role);
             } else {
                 System.out.println("No user found with that ID.");
@@ -57,6 +59,7 @@ public class LoginController {
             user.setUserRole(role);
             user.setUserId(id);
             user.setUsername(name);
+            user.setPermit(permit);
 
             if (Objects.equals(role, "manager")) {
                 loadFXML("adm-dashboard-page");

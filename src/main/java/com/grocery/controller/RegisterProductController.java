@@ -41,7 +41,6 @@ public class RegisterProductController
     private long lastKeyTime = 0;
     private static final int SCANNER_THRESHOLD_MS = 50;
 
-
     @javafx.fxml.FXML
     public void initialize() throws SQLException {
         alert = new AlertHandler();
@@ -135,6 +134,7 @@ public class RegisterProductController
                     prod_amt.decrement(99999);
                     prod_price.decrement((int) 9999999.99);
                     expiry_date.setValue(null);
+
                 }
 
             } catch (SQLException e) {

@@ -39,28 +39,29 @@
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="665.0">
                      <Button layoutX="711.0" layoutY="41.0" mnemonicParsing="false" onAction="#search" text="🔍" />
                      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#reg_pro_btn" text="Register Product" />
-                     <Button fx:id="del_prd_btn" styleClass="del_btn" layoutX="773.0" layoutY="14.0" mnemonicParsing="false" onAction="#re_prod_btn" text="🗑" visible="false" />
+                     <Button fx:id="del_prd_btn" layoutX="773.0" layoutY="14.0" mnemonicParsing="false" onAction="#re_prod_btn" styleClass="del_btn" text="🗑" visible="false" />
                          <TableView fx:id="productTable" layoutX="10.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="70.0" prefHeight="344.0" prefWidth="792.0">
                              <columns>
-                                 <TableColumn fx:id="colId" onEditCommit="#edit_prod" prefWidth="190.0" text="ID" />
-                                 <TableColumn fx:id="colName" onEditCommit="#edit_prod" prefWidth="210.0" text="Item Name" />
-                                 <TableColumn fx:id="colBatch" onEditCommit="#edit_prod" prefWidth="120.0" text="Batch Num" />
-                                 <TableColumn fx:id="colPrice" onEditCommit="#edit_prod" prefWidth="70.0" text="Price" />
-                                 <TableColumn fx:id="colExpiry" onEditCommit="#edit_prod" prefWidth="110.0" text="Expiry Date" />
-                                 <TableColumn fx:id="colStock" onEditCommit="#edit_prod" text="No. of Stock" />
+                                 <TableColumn fx:id="colId" prefWidth="190.0" text="ID" />
+                                 <TableColumn fx:id="colName" onEditCommit="#edit_prodName" prefWidth="210.0" text="Item Name" />
+                                 <TableColumn fx:id="colBatch" onEditCommit="#edit_prodBtchNum" prefWidth="120.0" text="Batch Num" />
+                                 <TableColumn fx:id="colPrice" onEditCommit="#edit_prodPrice" prefWidth="70.0" text="Price" />
+                                 <TableColumn fx:id="colExpiry" onEditCommit="#edit_prodExpDate" prefWidth="110.0" text="Expiry Date" />
+                                 <TableColumn fx:id="colStock" onEditCommit="#edit_prodNoStock" text="No. of Stock" />
                              </columns>
                          </TableView>
                      <Button layoutX="132.0" layoutY="14.0" mnemonicParsing="false" onAction="#gen_inv_rep_btn" prefHeight="25.0" prefWidth="214.0" text="Generate Inventory Report" />
                      <TextField fx:id="search_field" layoutX="14.0" layoutY="43.0" onAction="#search" prefHeight="26.0" prefWidth="686.0" />
                   <CheckBox fx:id="select_all" layoutX="696.0" layoutY="18.0" mnemonicParsing="false" onAction="#select_all_products" text="SelectAll" />
                   <Button layoutX="600.0" layoutY="14.0" mnemonicParsing="false" onAction="#save_chngs" text="Save Changes" />
+                  <Button layoutX="747.0" layoutY="41.0" mnemonicParsing="false" onAction="#refresh_prod" text="🔄" />
                  </AnchorPane>
              </Tab>
              <Tab text="Staff">
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#create_staff_btn" text="Create Staff" />
                      <Button fx:id="adm_perm_btn" layoutX="110.0" layoutY="14.0" mnemonicParsing="false" onAction="#adm_perm_btn" text="Give Admin Permit" />
-                     <Button fx:id="del_stf_btn" styleClass="del_btn" layoutX="240.0" layoutY="14.0" mnemonicParsing="false" onAction="#rem_staff_btn" text="Remove Staff" />
+                     <Button fx:id="del_stf_btn" layoutX="240.0" layoutY="14.0" mnemonicParsing="false" onAction="#rem_staff_btn" styleClass="del_btn" text="Remove Staff" />
                      <TableView fx:id="staffTable" layoutX="14.0" layoutY="53.0" prefHeight="349.0" prefWidth="750.0">
                          <columns>
                              <TableColumn fx:id="colStaffId" prefWidth="120.0" text="Staff ID" />
@@ -68,6 +69,7 @@
                              <TableColumn fx:id="colStaffRole" prefWidth="170.0" text="Role Status" />
                          </columns>
                      </TableView>
+                  <Button layoutX="736.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh_stf" text="🔄" />
                  </AnchorPane>
              </Tab>
          </tabs>

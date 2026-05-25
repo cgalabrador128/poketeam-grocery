@@ -1,6 +1,7 @@
 package com.grocery;
 
 import com.grocery.data.DataBConnection;
+import com.grocery.data.User;
 import com.grocery.util.AlertHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static com.grocery.data.DataBConnection.closeConnection;
+
 
 /**
  * JavaFX App
@@ -24,10 +27,29 @@ public class App extends Application {
 
     @Override
     public void start(Stage stages) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.stage = stages;
         stage.setScene(scene);
+
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+
+            boolean confirm = new AlertHandler().confirmAlert("Exit", "Are you sure you want to quit?");
+
+            if (confirm) {
+                stage.close();
+                closeConnection();
+                try {
+                    User user = User.getInstance();
+                    user.clearSession();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         stage.show();
     }
 

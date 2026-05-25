@@ -16,10 +16,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static com.grocery.App.loadFXML;
@@ -32,19 +34,19 @@ public class AdmDBController {
     @FXML
     private ListView alert_list;
     @FXML
-    private TableColumn colName;
+    private TableColumn<Product, String> colName;
     @FXML
-    private TableColumn colBatch;
+    private TableColumn<Product, Integer> colBatch;
     @FXML
-    private TableColumn colPrice;
+    private TableColumn<Product, Double> colPrice;
     @FXML
-    private TableColumn colExpiry;
+    private TableColumn<Product, LocalDate> colExpiry;
     @FXML
-    private TableColumn colId;
+    private TableColumn<Product, Integer> colId;
     @FXML
-    private TableColumn colStock;
+    private TableColumn<Product, Integer> colStock;
     @FXML
-    private TableView productTable;
+    private TableView<Product> productTable;
     @FXML
     private TableView<Employee> staffTable;
     @FXML
@@ -120,6 +122,7 @@ public class AdmDBController {
 
             //text-field
             colName.setCellFactory(TextFieldTableCell.forTableColumn());
+            colExpiry.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(DateTimeFormatter.ofPattern("yyyy-MM-dd"), null)));
             colBatch.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
             colPrice.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
             colStock.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -195,11 +198,29 @@ public class AdmDBController {
                 });
             }
         });
+
+        //css
+        productTable.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Product item, boolean empty) {
+                super.updateItem(item, empty);
+
+                // Always clear existing custom styles first
+                getStyleClass().remove("edited-stock-row");
+
+                if (item != null && !empty) {
+                    if (item.isModified()) {
+                        getStyleClass().add("edited-stock-row");
+                    }
+                }
+            }
+        });
     }
 
     @FXML
     private void gen_inv_rep_btn(ActionEvent actionEvent){
         //idk yet
+
     }
 
     @FXML
@@ -376,13 +397,86 @@ public class AdmDBController {
     @FXML
     public void reg_pro_btn(ActionEvent actionEvent) throws IOException {popFXML("reg-prod", "Register Product");}
 
+
     @FXML
-    public void edit_prod(Event event) {
-        TableRow col = (TableRow) event.getSource();
+    public void save_chngs(ActionEvent actionEvent) {
+        String updateSql = "UPDATE inventory SET product_name = ?, product_batch_no = ?, " +
+                "product_price = ?, product_stock_count = ? WHERE product_serial_number = ?";
+
+        try (PreparedStatement pstmt = dm.prepareStatement(updateSql)) {
+            int changesCount = 0;
+
+            for (Product p : productTable.getItems()) {
+                if (p.isModified()) {
+                    pstmt.setString(1, p.getItemName());
+                    pstmt.setInt(2, p.getBatchNum());
+                    pstmt.setDouble(3, p.getPrice());
+                    pstmt.setInt(4, p.getNoOfStock());
+                    pstmt.setLong(5, p.getId());
+
+                    pstmt.addBatch();
+                    p.setModified(false); //reset
+                    changesCount++;
+                }
+            }
+
+            if (changesCount > 0) {
+                pstmt.executeBatch(); // Send all updates to MySQL at once
+                alert.showMessageAlert("Success", changesCount + " changes saved!");
+            } else {
+                alert.showSimpleAlert("No Changes", "No modifications detected.");
+            }
+
+        } catch (SQLException e) {
+            alert.showSimpleAlert("Error", "Failed to save changes.");
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
-    public void save_chngs(ActionEvent actionEvent) {
+    public void refresh_stf(ActionEvent actionEvent) throws SQLException {staffTable.setItems(dat.loadStaff(dm, user));}
+
+    @FXML
+    public void refresh_prod(ActionEvent actionEvent) throws SQLException {productTable.setItems(dat.loadInventory(dm));}
+
+    @FXML
+    public void edit_prodPrice(TableColumn.CellEditEvent<Product, Double> event) {
+        Product p = event.getRowValue();
+        p.setPrice(event.getNewValue());
+        p.setModified(true);
+        productTable.refresh();
+    }
+
+    @FXML
+    public void edit_prodNoStock(TableColumn.CellEditEvent<Product, Integer> event ) {
+        Product p = event.getRowValue();
+        p.setNoOfStock(event.getNewValue());
+        p.setModified(true);
+        productTable.refresh();
+    }
+
+    @FXML
+    public void edit_prodExpDate(TableColumn.CellEditEvent<Product, String> event) {
+        Product p = event.getRowValue();
+        p.setExpiryDate(LocalDate.parse((CharSequence) event.getRowValue()));
+        p.setModified(true);
+        productTable.refresh();
+    }
+
+    @FXML
+    public void edit_prodBtchNum(TableColumn.CellEditEvent<Product, Integer> event) {
+        Product p = event.getRowValue();
+        p.setBatchNum(event.getNewValue());
+        p.setModified(true);
+        productTable.refresh();
+    }
+
+    @FXML
+    public void edit_prodName(TableColumn.CellEditEvent<Product, String> event) {
+        Product p = event.getRowValue();
+        p.setItemName(event.getNewValue());
+        p.setModified(true);
+        productTable.refresh();
     }
 }

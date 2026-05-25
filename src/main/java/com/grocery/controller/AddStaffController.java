@@ -3,6 +3,8 @@ package com.grocery.controller;
 import com.grocery.data.DataBConnection;
 
 import com.grocery.data.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -40,8 +42,7 @@ public class AddStaffController {
     public void initialize() throws SQLException {
         user = User.getInstance();
         dm = user.getConnection();
-
-
+        staff_role.setItems(FXCollections.observableArrayList("manager", "staff"));
     }
 
     @FXML
@@ -50,6 +51,7 @@ public class AddStaffController {
         String name = staff_name.getText();
         int id = Integer.parseInt(staff_id.getText());
         String pass = staff_pass.getText();
+        String role = staff_role.getSelectionModel().getSelectedItem().toString();
 
         //confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to add "+name+" ?");
@@ -60,7 +62,7 @@ public class AddStaffController {
                 pstmt.setInt(1, id);
                 pstmt.setString(2, name);
                 pstmt.setString(3, pass);
-                pstmt.setString(4, "staff");
+                pstmt.setString(4, role);
 
                 int rowsAffected = pstmt.executeUpdate();
                 System.out.println(rowsAffected);

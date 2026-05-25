@@ -2,7 +2,6 @@ package com.grocery.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,13 +14,13 @@ public class LoadData {
     public ObservableList<String> loadAlerts(Connection dm, User user) throws SQLException {
         if (user.getUserRole() == "staff"){return null;}
 
-        String query = "SELECT * FROM alert";
+        String query = "SELECT * FROM alert ORDER BY alert_time DESC";
         Statement stmt = dm.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {
             String alertString = rs.getTimestamp("alert_time").toString() +
                     " : " + rs.getString("alert_type") +
-                    " : " + Integer.toString(rs.getInt("product_serial_number")) +
+                    " : " + Long.toString(rs.getLong("product_serial_number")) +
                     " : " + Integer.toString(rs.getInt("alert_id"));
 
             alerts.add(alertString);
