@@ -48,6 +48,13 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>com.grocery.App</mainClass>
+                            <jlinkImageName>my-app-name</jlinkImageName>
+                            <launcher>poketeam-inventory-manager</launcher>
+                            <compress>2</compress>
+                            <noHeaderFiles>true</noHeaderFiles>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <type>deb</type>
                         </configuration>
                     </execution>
                 </executions>
