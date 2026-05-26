@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.grocery</groupId>
     <artifactId>demo</artifactId>
@@ -13,7 +13,8 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>9.1.0</version> </dependency>
+            <version>9.7.0</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -33,8 +34,6 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
-                    <source>16</source>
-                    <target>16</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -48,13 +47,6 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>com.grocery.App</mainClass>
-                            <jlinkImageName>my-app-name</jlinkImageName>
-                            <launcher>poketeam-inventory-manager</launcher>
-                            <compress>2</compress>
-                            <noHeaderFiles>true</noHeaderFiles>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                            <type>deb</type>
                         </configuration>
                     </execution>
                 </executions>

@@ -1,18 +1,17 @@
 package com.grocery;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import com.grocery.data.User;
 import com.grocery.util.AlertHandler;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.SQLException;
-
-import static com.grocery.data.DataBConnection.closeConnection;
 
 
 /**
@@ -29,10 +28,11 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         App.stage = stages;
         stage.setScene(scene);
-
+        
         stage.setOnCloseRequest(event -> {
             event.consume();
 
+            new AlertHandler().setStage(stage);
             boolean confirm = new AlertHandler().confirmAlert("Exit", "Are you sure you want to quit?");
 
             if (confirm) {
@@ -45,7 +45,7 @@ public class App extends Application {
                 }
             }
         });
-
+        new AlertHandler().setStage(stage);
         stage.show();
     }
 
@@ -69,13 +69,18 @@ public class App extends Application {
 
         popupStage.setOnCloseRequest(event->{
             event.consume();
+            new AlertHandler().setStage(popupStage);
             boolean confirm = new AlertHandler().confirmAlert("Exit", "Are you sure you want to quit?");
             if(confirm){
                 popupStage.close();
             }
         });
-
+        new AlertHandler().setStage(popupStage);
         popupStage.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 
 }

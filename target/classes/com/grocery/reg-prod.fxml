@@ -12,7 +12,7 @@
 <?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.RegisterProductController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.RegisterProductController">
    <children>
       <Label fx:id="title_label" alignment="CENTER" layoutX="223.0" layoutY="26.0" prefHeight="38.0" prefWidth="139.0" text="Modify Product" textAlignment="CENTER" />
       <GridPane layoutX="2.0" layoutY="88.0" prefHeight="182.0" prefWidth="590.0">

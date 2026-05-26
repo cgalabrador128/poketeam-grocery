@@ -8,8 +8,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="30.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.LoginController">
+
+<VBox alignment="CENTER" spacing="30.0" maxHeight="Infinity" maxWidth="Infinity"  xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.LoginController">
    <children>
 
       <Label text="Welcome To PokeTeam Grocery">
@@ -18,30 +21,37 @@
          </font>
       </Label>
 
-      <GridPane alignment="CENTER" hgap="15.0" vgap="20.0">
+      <GridPane alignment="CENTER" hgap="15.0" vgap="20.0" maxWidth="Infinity">
+
+
+         <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" halignment="RIGHT" minWidth="100.0"/>
+            <ColumnConstraints hgrow="NEVER" halignment="LEFT" /> 
+         </columnConstraints>
+
          <children>
             <Label text="User ID:" GridPane.columnIndex="0" GridPane.rowIndex="0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="user_id" promptText="1234" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField fx:id="user_id" promptText="1234" prefHeight="35.0" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
             <Label text="PASSWORD:" GridPane.columnIndex="0" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <PasswordField fx:id="pass_field" promptText="************" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="pass_field" promptText="************" prefHeight="35.0" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#submit" prefHeight="35.0" prefWidth="100.0" text="Login">
+      <Button mnemonicParsing="false" onAction="#submit" prefHeight="35.0" prefWidth="150.0" minWidth="120.0" maxWidth="200.0" text="Login">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
    </children>
    <padding>
-      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+      <Insets bottom="40.0" left="60.0" right="60.0" top="40.0" />
    </padding>
 </VBox>

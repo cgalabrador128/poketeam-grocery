@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0"
-      prefWidth="819.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.grocery.controller.StaffDBController">
-    <TabPane fx:id="mainTabPane" layoutX="2.0" layoutY="1.0" prefHeight="462.0" prefWidth="812.0"
-             tabClosingPolicy="UNAVAILABLE">
-        <Tab text="Account Details">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <Label layoutX="14.0" layoutY="25.0" prefHeight="41.0" prefWidth="59.0" text="WELCOME"/>
-                <Label fx:id="staff_name" layoutX="80.0" layoutY="14.0" prefHeight="63.0" prefWidth="318.0"
-                       text="name"/>
-                <Label fx:id="staff_id" layoutX="80.0" layoutY="77.0" prefHeight="63.0" prefWidth="318.0"
-                       text="employee id"/>
-                <Label layoutX="14.0" layoutY="88.0" prefHeight="41.0" prefWidth="59.0" text="ID:"/>
-            </AnchorPane>
-        </Tab>
-        <Tab fx:id="prod_tab" text="Products">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="665.0">
-                <Button layoutX="711.0" layoutY="41.0" mnemonicParsing="false" onAction="#search" text="🔍"/>
-                <Button fx:id="delete_btn_id" layoutX="773.0" layoutY="14.0" mnemonicParsing="false"
-                        onAction="#re_prod_btn" text="🗑" visible="false"/>
-                <TableView fx:id="productTable" layoutX="10.0" layoutY="88.0" maxHeight="-Infinity"
-                           maxWidth="-Infinity" minHeight="70.0" prefHeight="344.0" prefWidth="792.0">
-                    <columns>
-                        <TableColumn fx:id="colId" prefWidth="190.0" text="ID"/>
-                        <TableColumn fx:id="colName" onEditCommit="#edit_prodName" prefWidth="210.0"
-                                     text="Item Name"/>
-                        <TableColumn fx:id="colBatch" onEditCommit="#edit_prodBtchNum" prefWidth="120.0"
-                                     text="Batch Num"/>
-                        <TableColumn fx:id="colPrice" onEditCommit="#edit_prodPrice" prefWidth="70.0" text="Price"/>
-                        <TableColumn fx:id="colExpiry" onEditCommit="#edit_prodExpDate" prefWidth="110.0"
-                                     text="Expiry Date"/>
-                        <TableColumn fx:id="colStock" onEditCommit="#edit_prodNoStock" text="No. of Stock"/>
-                    </columns>
-                </TableView>
-                <TextField fx:id="search_field" layoutX="14.0" layoutY="43.0" onAction="#search" prefHeight="26.0"
-                           prefWidth="686.0"/>
-                <CheckBox fx:id="select_all" layoutX="696.0" layoutY="18.0" mnemonicParsing="false"
-                          onAction="#select_all_products" text="SelectAll"/>
-                <Button layoutX="600.0" layoutY="14.0" mnemonicParsing="false" onAction="#save_chngs"
-                        text="Save Changes"/>
-                <Button layoutX="747.0" layoutY="41.0" mnemonicParsing="false" onAction="#refresh_prod" text="🔄"/>
-            </AnchorPane>
-        </Tab>
-    </TabPane>
-    <Button layoutX="744.0" layoutY="463.0" mnemonicParsing="false" onAction="#logout_btn" text="Logout"/>
-</Pane>
+<VBox prefHeight="494.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.StaffDBController">
+    <children>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+            <tabs>
+                <Tab text="Account Details">
+                    <VBox spacing="10.0">
+                        <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
+                        <children>
+                            <HBox spacing="10.0">
+                                <Label text="WELCOME" />
+                                <Label fx:id="staff_name" text="name" />
+                            </HBox>
+                            <HBox spacing="10.0">
+                                <Label text="ID:" />
+                                <Label fx:id="staff_id" text="employee id" />
+                            </HBox>
+                        </children>
+                    </VBox>
+                </Tab>
+                
+                <Tab fx:id="prod_tab" text="Products">
+                    <VBox spacing="10.0">
+                        <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+                        <children>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <children>
+                                    <Button fx:id="save_chngs" onAction="#save_chngs" text="Save Changes" />
+                                    <CheckBox fx:id="select_all" onAction="#select_all_products" text="SelectAll" />
+                                    <Button fx:id="delete_btn_id" onAction="#re_prod_btn" text="🗑" visible="false" />
+                                </children>
+                            </HBox>
+                            
+                            <HBox spacing="10.0">
+                                <children>
+                                    <TextField fx:id="search_field" onAction="#search" HBox.hgrow="ALWAYS" />
+                                    <Button onAction="#search" text="🔍" />
+                                    <Button onAction="#refresh_prod" text="🔄" />
+                                </children>
+                            </HBox>
+                            
+                            <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colId" prefWidth="190.0" text="ID" />
+                                    <TableColumn fx:id="colName" onEditCommit="#edit_prodName" prefWidth="210.0" text="Item Name" />
+                                    <TableColumn fx:id="colBatch" onEditCommit="#edit_prodBtchNum" prefWidth="120.0" text="Batch Num" />
+                                    <TableColumn fx:id="colPrice" onEditCommit="#edit_prodPrice" prefWidth="70.0" text="Price" />
+                                    <TableColumn fx:id="colExpiry" onEditCommit="#edit_prodExpDate" prefWidth="110.0" text="Expiry Date" />
+                                    <TableColumn fx:id="colStock" onEditCommit="#edit_prodNoStock" text="No. of Stock" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </VBox>
+                </Tab>
+            </tabs>
+        </TabPane>
+        
+        <HBox alignment="CENTER_RIGHT">
+            <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+            <children>
+                <Button onAction="#logout_btn" text="Logout" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

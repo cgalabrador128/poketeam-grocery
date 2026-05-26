@@ -1,9 +1,19 @@
 package com.grocery.controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 import com.grocery.data.Archive;
-import com.grocery.data.LoadData;
 import com.grocery.data.User;
 import com.grocery.util.AlertHandler;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,18 +21,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.sql.*;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.stream.Collectors;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 public class InventoryReportController
 {

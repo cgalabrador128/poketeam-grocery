@@ -1,16 +1,21 @@
 package com.grocery.data;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.*;
-import java.time.LocalDate;
 
 public class LoadData {
     private ObservableList<Product> productList = FXCollections.observableArrayList();
     private ObservableList<String> alerts = FXCollections.observableArrayList();
     private ObservableList<Employee> staffList = FXCollections.observableArrayList();
 
+    @SuppressWarnings("StringEquality")
     public ObservableList<String> loadAlerts(Connection dm, User user) throws SQLException {
         if (user.getUserRole() == "staff"){return null;}
 
