@@ -2,7 +2,6 @@ package com.grocery.controller;
 
 import com.grocery.data.User;
 import com.grocery.util.AlertHandler;
-import com.grocery.data.DataBConnection;
 import com.grocery.util.GeneralFormatter;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -37,7 +36,7 @@ public class RegisterProductController
     AlertHandler alert;
     GeneralFormatter formatter;
 
-    private StringBuilder barcodeBuffer = new StringBuilder();
+    private final StringBuilder barcodeBuffer = new StringBuilder();
     private long lastKeyTime = 0;
     private static final int SCANNER_THRESHOLD_MS = 50;
 

@@ -1,18 +1,15 @@
 package com.grocery;
 
-import com.grocery.data.DataBConnection;
 import com.grocery.data.User;
 import com.grocery.util.AlertHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import static com.grocery.data.DataBConnection.closeConnection;
@@ -40,7 +37,6 @@ public class App extends Application {
 
             if (confirm) {
                 stage.close();
-                closeConnection();
                 try {
                     User user = User.getInstance();
                     user.clearSession();
@@ -80,10 +76,6 @@ public class App extends Application {
         });
 
         popupStage.showAndWait();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 
 }

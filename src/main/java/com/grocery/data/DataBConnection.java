@@ -35,7 +35,7 @@ public class DataBConnection { //Uses Singleton Design
         return instance;
     }
 
-    Connection getConnection(Boolean admn) throws SQLException {
+    public Connection getConnection(Boolean admn) throws SQLException {
         if (connection == null || connection.isClosed()) {
             if (admn == true) {
                 connection = DriverManager.getConnection(this.url, this.admnuser, this.admnpass);
@@ -46,15 +46,17 @@ public class DataBConnection { //Uses Singleton Design
         return connection;
     }
 
-    public static void closeConnection(){
-        if (connection!=null){
+    public static Connection closeConnection(Connection conn){
+        if (conn!=null){
             try{
-                if (!connection.isClosed()){
-                    connection.close();
+                if (!conn.isClosed()){
+                    conn.close();
+                    return conn;
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 }

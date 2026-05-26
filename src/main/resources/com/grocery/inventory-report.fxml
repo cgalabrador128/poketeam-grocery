@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="InventoryReportController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="402.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.InventoryReportController">
+   <children>
+      <Button layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#gen_daily" text="Generate Daily Report" />
+      <Button layoutX="204.0" layoutY="30.0" mnemonicParsing="false" onAction="#gen_weekly" text="Generate Weekly Report" />
+      <Button layoutX="30.0" layoutY="83.0" mnemonicParsing="false" onAction="#gen_monthly" text="Generate Monthly Report" />
+      <Button layoutX="220.0" layoutY="83.0" mnemonicParsing="false" onAction="#gen_cust" text="Generate Custom Report" />
+      <DatePicker fx:id="cust" layoutX="395.0" layoutY="85.0" />
+      <ScrollPane layoutX="30.0" layoutY="182.0" prefHeight="200.0" prefWidth="648.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="197.0" prefWidth="645.0">
+               <children>
+                  <TableView fx:id="mainTable" layoutX="-2.0" layoutY="-3.0" prefHeight="210.0" prefWidth="648.0">
+                    <columns>
+                        <TableColumn fx:id="colDate" prefWidth="59.0" text="date" />
+                        <TableColumn fx:id="colHr" prefWidth="61.0" text="hour" />
+                      <TableColumn fx:id="colName" prefWidth="146.0" text="name" />
+                      <TableColumn fx:id="colStock" prefWidth="81.0" text="no. of stock" />
+                        <TableColumn fx:id="colPrice" prefWidth="77.0" text="price" />
+                        <TableColumn fx:id="colAdd" prefWidth="106.0" text="total_added" />
+                        <TableColumn fx:id="colRem" prefWidth="117.0" text="total_removed" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
 </AnchorPane>

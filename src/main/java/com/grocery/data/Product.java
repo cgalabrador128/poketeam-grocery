@@ -11,8 +11,6 @@ public class Product {
     private int noOfStock;
     public boolean isModified;
 
-
-
     public Product(long id, String itemName, int batchNum, double price, LocalDate expiryDate, int noOfStock) {
         this.id = id;
         this.itemName = itemName;

@@ -26,13 +26,16 @@ create table alert (
 );
 
 create table archive (
-     record_id int auto_increment primary key,
-     product_name varchar(255) not null,
-     product_stock_count int not null,
-     product_price double not null,
-     record_sales int not null default 0,
-     record_timeframe enum('daily', 'weekly', 'monthly', 'yearly') not null,
-     archived_at timestamp default current_timestamp
-);
+    record_id int auto_increment primary key,
+    product_name varchar(255) not null,
+    product_stock_count int not null,
+    product_price double not null,
+    total_added int not null default 0,
+    total_removed int not null default 0,
+    archive_date DATE NOT NULL,
+    archive_hour INT NOT NULL,
+    archived_at timestamp default current_timestamp,
 
+    unique key hourly_log (product_name, archive_date, archive_hour)
+);
 select * from users;

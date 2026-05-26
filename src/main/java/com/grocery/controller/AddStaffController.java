@@ -1,10 +1,7 @@
 package com.grocery.controller;
 
-import com.grocery.data.DataBConnection;
-
 import com.grocery.data.User;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,14 +10,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import static com.grocery.App.loadFXML;
 

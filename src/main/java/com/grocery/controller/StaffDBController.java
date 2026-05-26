@@ -1,6 +1,5 @@
 package com.grocery.controller;
 
-import com.grocery.data.Employee;
 import com.grocery.data.LoadData;
 import com.grocery.data.Product;
 import com.grocery.data.User;
@@ -16,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -29,11 +27,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static com.grocery.App.loadFXML;
-import static com.grocery.App.popFXML;
 import static com.grocery.data.DataBConnection.closeConnection;
 
 public class StaffDBController
 {
+    public CheckBox select_all;
     @FXML
     private Label staff_name;
     @FXML
@@ -55,25 +53,23 @@ public class StaffDBController
     @FXML
     private TableColumn<Product, Integer> colStock;
     @FXML
-    private CheckBox select_all;
-    @FXML
     private Tab prod_tab;
     @FXML
     private TextField search_field;
+    @FXML
+    private TabPane mainTabPane;
 
     //barcodebuffer
-    private StringBuilder barcodeBuffer = new StringBuilder();
+    private final StringBuilder barcodeBuffer = new StringBuilder();
     private long lastKeyTime = 0;
     private static final int SCANNER_THRESHOLD_MS = 50;
 
     //Initialize other Variables
     User user;
     AlertHandler alert;
-    Product product;
     LoadData dat;
     Connection dm;
-    @FXML
-    private TabPane mainTabPane;
+    private boolean session = true;
 
 
     @FXML
@@ -82,6 +78,9 @@ public class StaffDBController
         user = User.getInstance();
         alert = new AlertHandler();
         dat = new LoadData();
+        if (user.getUserRole() == null) {
+            return;
+        }
         if (user.getUsername()!=null){
             staff_name.setText(user.getUsername());
         }
@@ -89,14 +88,12 @@ public class StaffDBController
 
         new Thread(() -> {
             try {
-                while (true) {
+                while (session) {
                     dm = user.getConnection();
                     Thread.sleep(2000);
                 }
             } catch (SQLException e) {
-                Platform.runLater(() -> {
-                    alert.showSimpleAlert("Database Error", "Check your connection and try again");
-                });
+                Platform.runLater(() -> alert.showSimpleAlert("Database Error", "Check your connection and try again"));
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -141,13 +138,11 @@ public class StaffDBController
 
 
 
-        productTable.setItems(dat.loadInventory(dm));
+        productTable.setItems(dat.loadInventory(user.getConnection()));
 
         prod_tab.selectedProperty().addListener((observable, wasSelected, isNowSelected) -> {
             if (isNowSelected) {
-                Platform.runLater(() -> {
-                    search_field.requestFocus();
-                });
+                Platform.runLater(() -> search_field.requestFocus());
             }
         });
 
@@ -198,10 +193,11 @@ public class StaffDBController
     public void logout_btn(ActionEvent actionEvent) throws SQLException, IOException {
         Boolean confirm = alert.confirmAlert("Logout","Do you want to logout?");
         if (confirm) {
-            closeConnection();
             user.clearSession();
+            session = false;
             loadFXML("login-page");
         }
+
     }
 
     @FXML
@@ -261,11 +257,15 @@ public class StaffDBController
                             pstmt2.setString(2, "unregistered");
                             pstmt2.setTimestamp(3, Timestamp.from(Instant.now()));
 
+                            try{
                             int rowsInserted = pstmt2.executeUpdate();
                             if (rowsInserted > 0) {
                                 alert.showSimpleAlert("Item not registered", "Alerting to Admin");
                             }
-
+                            } catch (SQLException e) {
+                                alert.showSimpleAlert("Error", "Cannot Execute Search, Please try again");
+                                e.printStackTrace();
+                            }
                         }
                     }
 
@@ -304,7 +304,12 @@ public class StaffDBController
     }
 
     @FXML
-    public void select_all_products(ActionEvent actionEvent) {productTable.getSelectionModel().selectAll();}
+    public void select_all_products(ActionEvent actionEvent) { int total  = productTable.getItems().size();
+        if  (productTable.getSelectionModel().getSelectedItems().size() != total) {
+            productTable.getSelectionModel().selectAll();
+        } else {
+            productTable.getSelectionModel().clearSelection();
+        }}
 
     @FXML
     public void refresh_prod(ActionEvent actionEvent) throws SQLException {productTable.setItems(dat.loadInventory(dm));}

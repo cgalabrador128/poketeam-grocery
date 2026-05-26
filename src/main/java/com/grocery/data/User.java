@@ -15,6 +15,7 @@ public class User {
     private DataBConnection dbconn = DataBConnection.getInstance();
     private String search;
     private Boolean permit;
+
     private User(){
         this.id = -99;
         this.name = null;
@@ -35,7 +36,9 @@ public class User {
         this.id = -99;
         this.name = null;
         this.role = null;
-        this.connection = null;
+        if (this.connection != null && !this.connection.isClosed()) {
+            this.connection = DataBConnection.closeConnection(this.connection);
+        }
         this.search = "";
         this.permit = false;
     }

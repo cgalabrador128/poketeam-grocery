@@ -4,7 +4,6 @@ import com.grocery.data.*;
 import com.grocery.util.*;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.event.Event;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
@@ -76,8 +75,10 @@ public class AdmDBController {
     Connection dm;
     LoadData dat;
 
+    private static boolean session = true;
+
     //barcodebuffer
-    private StringBuilder barcodeBuffer = new StringBuilder();
+    private final StringBuilder barcodeBuffer = new StringBuilder();
     private long lastKeyTime = 0;
     private static final int SCANNER_THRESHOLD_MS = 50;
 
@@ -87,9 +88,14 @@ public class AdmDBController {
     private void initialize() throws SQLException {
         // Hint: initialize() will be called when the associated FXML has been completely loaded.
         try {
+            session = true;
             alert = new AlertHandler();
             dat = new LoadData();
             user = User.getInstance();
+
+            if (user.getUserRole() == null) {
+                return;
+            }
 
             if (user.getUsername() != null) {
                 adm_name.setText(user.getUsername());
@@ -97,17 +103,26 @@ public class AdmDBController {
 
             new Thread(() -> {
                 try {
-                    while (true) {
+                    while (session) {
                         dm = user.getConnection();
                         Thread.sleep(2000);
                     }
                 } catch (SQLException e) {
+                    if (!session){
+                        Thread.currentThread().interrupt();
+                    }
                     Platform.runLater(() -> {
                         alert.showSimpleAlert("Database Error", "Check your connection and try again");
                     });
                     e.printStackTrace();
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    if (!session){
+                        Thread.currentThread().interrupt();
+                    }
+                    Platform.runLater(()-> {
+                        alert.showSimpleAlert("Interruption Error", "Idk it errored");
+                        e.printStackTrace();
+                    });
                 }
             }).start();
 
@@ -141,9 +156,9 @@ public class AdmDBController {
             del_stf_btn.visibleProperty().bind(Bindings.isNotEmpty(staffTable.getSelectionModel().getSelectedItems()));
 
             //loads methods
-            alert_list.setItems(dat.loadAlerts(dm, user));
-            productTable.setItems(dat.loadInventory(dm));
-            staffTable.setItems(dat.loadStaff(dm, user));
+            alert_list.setItems(dat.loadAlerts(user.getConnection(), user));
+            productTable.setItems(dat.loadInventory(user.getConnection()));
+            staffTable.setItems(dat.loadStaff(user.getConnection(), user));
 
 
         }catch (SQLException e){
@@ -151,84 +166,85 @@ public class AdmDBController {
             e.printStackTrace();
         }
 
-        //Events
-        mainTabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            //switches tabs
-            if (event.getCode() == KeyCode.TAB) {
-                if (event.isShiftDown()) {
-                    mainTabPane.getSelectionModel().selectPrevious();
-                } else {
-                    mainTabPane.getSelectionModel().selectNext();
-                }
-                event.consume();
-            }
-
-            //scans
-            mainTabPane.getSelectionModel().select(prod_tab);
-
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastKeyTime > SCANNER_THRESHOLD_MS) {
-                barcodeBuffer.setLength(0);
-            }
-            lastKeyTime = currentTime;
-
-            if (event.getCode() == KeyCode.ENTER) {
-                if (barcodeBuffer.length() > 4) {
-
-                    String finalBarcode = barcodeBuffer.toString();
-
-                    Platform.runLater(() -> {
-                        search_field.setText(finalBarcode);
-                        search_field.requestFocus();
-                        search_field.positionCaret(finalBarcode.length());
-                    });
-
-                    barcodeBuffer.setLength(0);
+        try {
+            //Events
+            mainTabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                //switches tabs
+                if (event.getCode() == KeyCode.TAB) {
+                    if (event.isShiftDown()) {
+                        mainTabPane.getSelectionModel().selectPrevious();
+                    } else {
+                        mainTabPane.getSelectionModel().selectNext();
+                    }
                     event.consume();
-                } else if (event.getText() != null && !event.getText().isEmpty()) {
-                    barcodeBuffer.append(event.getText());
                 }
-            } // end of barcodescans
-        });
 
-        prod_tab.selectedProperty().addListener((observable, wasSelected, isNowSelected) -> {
-            if (isNowSelected) {
-                Platform.runLater(() -> {
-                    search_field.requestFocus();
-                });
-            }
-        });
+                //scans
+                mainTabPane.getSelectionModel().select(prod_tab);
 
-        //css
-        productTable.setRowFactory(tv -> new TableRow<>() {
-            @Override
-            protected void updateItem(Product item, boolean empty) {
-                super.updateItem(item, empty);
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastKeyTime > SCANNER_THRESHOLD_MS) {
+                    barcodeBuffer.setLength(0);
+                }
+                lastKeyTime = currentTime;
 
-                // Always clear existing custom styles first
-                getStyleClass().remove("edited-stock-row");
+                if (event.getCode() == KeyCode.ENTER) {
+                    if (barcodeBuffer.length() > 4) {
 
-                if (item != null && !empty) {
-                    if (item.isModified()) {
-                        getStyleClass().add("edited-stock-row");
+                        String finalBarcode = barcodeBuffer.toString();
+
+                        Platform.runLater(() -> {
+                            search_field.setText(finalBarcode);
+                            search_field.requestFocus();
+                            search_field.positionCaret(finalBarcode.length());
+                        });
+
+                        barcodeBuffer.setLength(0);
+                        event.consume();
+                    } else if (event.getText() != null && !event.getText().isEmpty()) {
+                        barcodeBuffer.append(event.getText());
+                    }
+                } // end of barcodescans
+            });
+
+            prod_tab.selectedProperty().addListener((observable, wasSelected, isNowSelected) -> {
+                if (isNowSelected) {
+                    Platform.runLater(() -> {
+                        search_field.requestFocus();
+                    });
+                }
+            });
+
+            //css
+            productTable.setRowFactory(tv -> new TableRow<>() {
+                @Override
+                protected void updateItem(Product item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    // Always clear existing custom styles first
+                    getStyleClass().remove("edited-stock-row");
+
+                    if (item != null && !empty) {
+                        if (item.isModified()) {
+                            getStyleClass().add("edited-stock-row");
+                        }
                     }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void gen_inv_rep_btn(ActionEvent actionEvent){
-        //idk yet
-
-    }
+    private void gen_inv_rep_btn(ActionEvent actionEvent) throws IOException {popFXML("inventory-report", "Generate Reports");}
 
     @FXML
     public void logout_btn(ActionEvent actionEvent) throws IOException, SQLException {
         Boolean confirm = alert.confirmAlert("Logout","Do you want to logout?");
         if (confirm) {
-            closeConnection();
             user.clearSession();
+            session = false;
             loadFXML("login-page");
         }
     }
@@ -391,7 +407,13 @@ public class AdmDBController {
     }
 
     @FXML
-    public void select_all_products(ActionEvent actionEvent) {productTable.getSelectionModel().selectAll();
+    public void select_all_products(ActionEvent actionEvent) {
+        int total  = productTable.getItems().size();
+        if  (productTable.getSelectionModel().getSelectedItems().size() != total) {
+            productTable.getSelectionModel().selectAll();
+        } else {
+            productTable.getSelectionModel().clearSelection();
+        }
     }
 
     @FXML
