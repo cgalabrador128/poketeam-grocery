@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="212.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.AddStaffController">
+   <children>
+      <AnchorPane prefHeight="14.0" prefWidth="600.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="600.0" text="Add staff" textAlignment="CENTER">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="30.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="207.0" text="Name Staff" textAlignment="CENTER" />
+            <TextField fx:id="staff_name" prefHeight="26.0" prefWidth="380.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="73.0" prefHeight="30.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="207.0" text="Staff ID" textAlignment="CENTER" />
+            <TextField fx:id="staff_id" prefHeight="26.0" prefWidth="380.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="104.0" prefHeight="30.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="207.0" text="Staff Password" textAlignment="CENTER" />
+            <TextField fx:id="staff_pass" prefHeight="26.0" prefWidth="380.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="10.0" layoutY="162.0" prefHeight="30.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="207.0" text="Staff Role" textAlignment="CENTER" />
+            <ChoiceBox fx:id="staff_role" prefHeight="26.0" prefWidth="378.0" />
+         </children>
+      </HBox>
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#submit_btn" prefHeight="26.0" prefWidth="626.0" text="OK" textAlignment="CENTER" />
+   </children>
+</VBox>
