@@ -27,6 +27,13 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login-page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         App.stage = stages;
+
+        stage.setMinWidth(500.0);
+        stage.setMinHeight(350.0);
+
+        stage.setWidth(500.0);
+        stage.setHeight(350.0);
+
         stage.setScene(scene);
         
         stage.setOnCloseRequest(event -> {

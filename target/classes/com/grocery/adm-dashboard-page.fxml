@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="600.0" minWidth="900.0" maxHeight="Infinity" maxWidth="Infinity"  stylesheets="@../../styles/adm-dsh-styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.AdmDBController">
+<VBox minHeight="600.0" minWidth="900.0" maxHeight="Infinity" maxWidth="Infinity" stylesheets="@../../styles/adm-dsh-styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.AdmDBController">
    <children>
-      
+
       <HBox alignment="CENTER_LEFT" spacing="10.0" maxWidth="Infinity">
          <padding><Insets bottom="5.0" left="10.0" right="10.0" top="5.0" /></padding>
          <children>
-            <Label text="Welcome">
+            <Label text="Welcome,">
                <font><Font size="14.0" /></font>
             </Label>
             <Label fx:id="adm_name" text="Name">
@@ -32,16 +32,15 @@
                   </StackPane>
                </content>
             </Tab>
+
             <Tab fx:id="prod_tab" text="Products">
                <content>
                   <VBox spacing="10.0" maxWidth="Infinity" fillWidth="true">
                      <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
                      <children>
                         <HBox spacing="10.0" alignment="CENTER_LEFT" maxWidth="Infinity">
-                            <children>
-                                <Label text="Products" styleClass="section_label" />
-                            </children>
                            <children>
+                              <Label text="Products" styleClass="section_label" />
                               <Button onAction="#reg_pro_btn" text="Register Product" />
                               <Button onAction="#gen_inv_rep_btn" text="Generate Inventory Report" />
                               <Button fx:id="save_chngs" onAction="#save_chngs" text="Save Changes" />
@@ -50,6 +49,7 @@
                               <Button fx:id="del_prd_btn" onAction="#re_prod_btn" styleClass="del_btn" text="🗑" />
                            </children>
                         </HBox>
+
                         <HBox spacing="10.0" alignment="CENTER_LEFT" maxWidth="Infinity">
                            <children>
                               <TextField fx:id="search_field" onAction="#search" HBox.hgrow="ALWAYS" />
@@ -57,6 +57,7 @@
                               <Button onAction="#refresh_prod" text="⟳" />
                            </children>
                         </HBox>
+
                         <TableView fx:id="productTable" VBox.vgrow="ALWAYS" maxWidth="Infinity">
                            <columns>
                               <TableColumn fx:id="colId" text="ID" prefWidth="${productTable.width * 0.18}"/>
@@ -71,6 +72,7 @@
                   </VBox>
                </content>
             </Tab>
+
             <Tab text="Staff">
                <content>
                   <VBox spacing="10.0" maxWidth="Infinity" fillWidth="true">
@@ -85,11 +87,12 @@
                               <Button onAction="#refresh_stf" text="⟳" />
                            </children>
                         </HBox>
-                        <TableView fx:id="staffTable" VBox.vgrow="ALWAYS">
+
+                        <TableView fx:id="staffTable" VBox.vgrow="ALWAYS" maxWidth="Infinity">
                            <columns>
-                              <TableColumn fx:id="colStaffId" text="Staff ID" prefWidth="${productTable.width * 0.20}"/>
-                              <TableColumn fx:id="colStaffName" text="Employee Name" prefWidth="${productTable.width * 0.55}"/>
-                              <TableColumn fx:id="colStaffRole" text="Role Status" prefWidth="${productTable.width * 0.25}"/>
+                              <TableColumn fx:id="colStaffId" text="Staff ID" prefWidth="${staffTable.width * 0.20}"/>
+                              <TableColumn fx:id="colStaffName" text="Employee Name" prefWidth="${staffTable.width * 0.55}"/>
+                              <TableColumn fx:id="colStaffRole" text="Role Status" prefWidth="${staffTable.width * 0.25}"/>
                            </columns>
                         </TableView>
                      </children>
@@ -105,6 +108,6 @@
             <Button onAction="#logout_btn" text="Logout" />
          </children>
       </HBox>
-      
+
    </children>
 </VBox>

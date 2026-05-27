@@ -3,65 +3,100 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="494.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.StaffDBController">
+<VBox minHeight="600.0" minWidth="900.0" maxHeight="Infinity" maxWidth="Infinity" stylesheets="@../../styles/adm-dsh-styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grocery.controller.StaffDBController">
     <children>
-        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" maxWidth="Infinity">
             <tabs>
                 <Tab text="Account Details">
-                    <VBox spacing="10.0">
-                        <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
+                    <VBox spacing="15.0" alignment="CENTER_LEFT" maxWidth="Infinity">
+                        <padding>
+                            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                        </padding>
                         <children>
-                            <HBox spacing="10.0">
-                                <Label text="WELCOME" />
-                                <Label fx:id="staff_name" text="name" />
+                            <Label text="Account Information">
+                                <font>
+                                    <Font name="System Bold" size="24.0" />
+                                </font>
+                            </Label>
+                            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                                <Label text="WELCOME,">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="staff_name" text="name">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
                             </HBox>
-                            <HBox spacing="10.0">
-                                <Label text="ID:" />
-                                <Label fx:id="staff_id" text="employee id" />
+                            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                                <Label text="ID:">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="staff_id" text="employee id">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
                             </HBox>
                         </children>
                     </VBox>
                 </Tab>
-                
+
                 <Tab fx:id="prod_tab" text="Products">
-                    <VBox spacing="10.0">
-                        <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+                    <VBox spacing="10.0" maxWidth="Infinity" fillWidth="true">
+                        <padding>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
                         <children>
-                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+
+                            <HBox spacing="10.0" alignment="CENTER_LEFT" maxWidth="Infinity">
                                 <children>
+                                    <Label text="Products" styleClass="section_label">
+                                        <font>
+                                            <Font name="System Bold" size="18.0" />
+                                        </font>
+                                    </Label>
                                     <Button fx:id="save_chngs" onAction="#save_chngs" text="Save Changes" />
-                                    <CheckBox fx:id="select_all" onAction="#select_all_products" text="SelectAll" />
-                                    <Button fx:id="delete_btn_id" onAction="#re_prod_btn" text="🗑" visible="false" />
+                                    <Region HBox.hgrow="ALWAYS" /> <CheckBox fx:id="select_all" onAction="#select_all_products" text="SelectAll" />
+                                    <Button fx:id="delete_btn_id" onAction="#re_prod_btn" styleClass="del_btn" text="🗑" visible="false" />
                                 </children>
                             </HBox>
-                            
-                            <HBox spacing="10.0">
+
+                            <HBox spacing="10.0" alignment="CENTER_LEFT" maxWidth="Infinity">
                                 <children>
-                                    <TextField fx:id="search_field" onAction="#search" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="search_field" onAction="#search" promptText="Search products..." HBox.hgrow="ALWAYS" />
                                     <Button onAction="#search" text="🔍" />
-                                    <Button onAction="#refresh_prod" text="🔄" />
+                                    <Button onAction="#refresh_prod" text="⟳" />
                                 </children>
                             </HBox>
-                            
-                            <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+
+                            <TableView fx:id="productTable" VBox.vgrow="ALWAYS" maxWidth="Infinity">
                                 <columns>
-                                    <TableColumn fx:id="colId" prefWidth="190.0" text="ID" />
-                                    <TableColumn fx:id="colName" onEditCommit="#edit_prodName" prefWidth="210.0" text="Item Name" />
-                                    <TableColumn fx:id="colBatch" onEditCommit="#edit_prodBtchNum" prefWidth="120.0" text="Batch Num" />
-                                    <TableColumn fx:id="colPrice" onEditCommit="#edit_prodPrice" prefWidth="70.0" text="Price" />
-                                    <TableColumn fx:id="colExpiry" onEditCommit="#edit_prodExpDate" prefWidth="110.0" text="Expiry Date" />
-                                    <TableColumn fx:id="colStock" onEditCommit="#edit_prodNoStock" text="No. of Stock" />
+                                    <TableColumn fx:id="colId" text="ID" prefWidth="${productTable.width * 0.18}" />
+                                    <TableColumn fx:id="colName" onEditCommit="#edit_prodName" text="Item Name" prefWidth="${productTable.width * 0.32}" />
+                                    <TableColumn fx:id="colBatch" onEditCommit="#edit_prodBtchNum" text="Batch Num" prefWidth="${productTable.width * 0.11}" />
+                                    <TableColumn fx:id="colPrice" onEditCommit="#edit_prodPrice" text="Price" prefWidth="${productTable.width * 0.09}" />
+                                    <TableColumn fx:id="colExpiry" onEditCommit="#edit_prodExpDate" text="Expiry Date" prefWidth="${productTable.width * 0.16}" />
+                                    <TableColumn fx:id="colStock" onEditCommit="#edit_prodNoStock" text="No. of Stock" prefWidth="${productTable.width * 0.12}" />
                                 </columns>
                             </TableView>
+
                         </children>
                     </VBox>
                 </Tab>
             </tabs>
         </TabPane>
-        
-        <HBox alignment="CENTER_RIGHT">
-            <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
+
+        <HBox alignment="CENTER_RIGHT" maxWidth="Infinity">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
             <children>
                 <Button onAction="#logout_btn" text="Logout" />
             </children>
